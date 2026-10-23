@@ -22,7 +22,7 @@ export function Hero() {
         <div className="absolute bottom-0 left-1/2 h-[82%] w-[78%] -translate-x-1/2 rounded-t-[48%] rounded-b-[12%] border border-cyan-100/20 bg-[#d9c7a3] shadow-[0_25px_80px_rgba(0,0,0,.28)]" />
         <div className="absolute bottom-8 left-1/2 h-32 w-[78%] -translate-x-1/2 rounded-full bg-cyan-100/20 blur-3xl" />
         <div className="absolute inset-x-0 bottom-0 h-[96%] overflow-hidden">
-          <Image src="/ilham-profile-enhanced.png" alt="Ilham Dharma Atmaja" fill priority sizes="(max-width: 1024px) 430px, 34vw" className="origin-bottom scale-[1.22] object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,.35)] saturate-[.82] contrast-[1.04]" />
+          <Image src="/ilham-profile-final.png" alt="Ilham Dharma Atmaja" fill priority sizes="(max-width: 1024px) 430px, 34vw" className="origin-bottom scale-[1.22] object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,.35)] saturate-[.82] contrast-[1.04]" />
         </div>
         <p className="absolute bottom-5 left-5 text-[10px] font-semibold uppercase tracking-[.2em] text-[#11191d]/60">Ilham / 2026</p>
       </motion.div>
