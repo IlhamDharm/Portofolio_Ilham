@@ -1,23 +1,36 @@
 "use client"
 
-import { ArrowDownRight, MoveUpRight } from "lucide-react"
+import Image from "next/image"
+import { ArrowDown, ArrowUpRight } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 import { profile } from "@/src/data/profile"
 
 export function Hero() {
   const reduceMotion = useReducedMotion()
-  return <section id="top" className="relative overflow-hidden px-6 pb-20 pt-36 lg:px-10 lg:pb-32 lg:pt-48">
-    <div className="pointer-events-none absolute right-[-12%] top-20 h-72 w-72 rounded-full bg-blue-600/15 blur-3xl" />
-    <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
-      <motion.div initial={reduceMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7 }}>
-        <p className="mb-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.24em] text-blue-600"><span className="h-2 w-2 rounded-full bg-blue-600" />Available for select projects</p>
-        <h1 className="max-w-4xl font-display text-[clamp(3.5rem,9vw,8.8rem)] font-medium leading-[.88] tracking-[-.09em]">Designing<br /><span className="text-blue-600">with intent.</span></h1>
+  return <section id="top" className="relative min-h-[820px] overflow-hidden bg-[#11191d] px-6 pb-10 pt-28 text-white lg:min-h-screen lg:px-12 lg:pt-32">
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_52%_42%,rgba(71,105,108,.26),transparent_30%),linear-gradient(115deg,#11191d_0%,#172126_52%,#10171b_100%)]" />
+    <div className="pointer-events-none absolute bottom-0 left-1/2 h-px w-[min(92vw,1400px)] -translate-x-1/2 bg-white/15" />
+    <div className="relative mx-auto grid min-h-[680px] max-w-[1500px] items-center gap-10 lg:grid-cols-[.95fr_1.35fr_.7fr] lg:gap-6">
+      <motion.div initial={reduceMotion ? false : { opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .7 }} className="self-center">
+        <div className="mb-10 h-1 w-14 bg-cyan-200" />
+        <p className="mb-5 max-w-xs text-xs font-semibold uppercase tracking-[.2em] text-cyan-100/70">{profile.role}</p>
+        <h1 className="max-w-xl font-display text-[clamp(3rem,6.5vw,6.8rem)] font-semibold leading-[.92] tracking-[-.07em]">{profile.headline}</h1>
+        <p className="mt-7 max-w-md text-sm leading-relaxed text-white/55">{profile.intro}</p>
+        <a href="#work" aria-label="Scroll to projects" className="mt-9 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white transition-transform hover:-translate-y-1 hover:bg-blue-500"><ArrowDown size={19} /></a>
       </motion.div>
-      <motion.div initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .25, duration: .7 }} className="max-w-sm lg:pb-2">
-        <p className="text-lg leading-relaxed text-zinc-600">{profile.intro}</p>
-        <div className="mt-10 flex items-center gap-5"><a href="#work" className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-sm text-white transition-transform hover:-translate-y-1">View my work <MoveUpRight size={16} /></a><a href="#about" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-black">More about me <ArrowDownRight size={16} /></a></div>
+      <motion.div initial={reduceMotion ? false : { opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15, duration: .8 }} className="relative order-first mx-auto h-[500px] w-full max-w-[430px] self-end sm:h-[600px] lg:order-none lg:h-[min(86vh,760px)] lg:max-w-[540px]">
+        <div className="absolute bottom-0 left-1/2 h-[82%] w-[78%] -translate-x-1/2 rounded-t-[48%] rounded-b-[12%] border border-cyan-100/20 bg-[#d9c7a3] shadow-[0_25px_80px_rgba(0,0,0,.28)]" />
+        <div className="absolute bottom-8 left-1/2 h-32 w-[78%] -translate-x-1/2 rounded-full bg-cyan-100/20 blur-3xl" />
+        <div className="absolute inset-x-0 bottom-0 h-[96%] overflow-hidden">
+          <Image src="/ilham-profile-enhanced.png" alt="Ilham Dharma Atmaja" fill priority sizes="(max-width: 1024px) 430px, 34vw" className="origin-bottom scale-[1.22] object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,.35)] saturate-[.82] contrast-[1.04]" />
+        </div>
+        <p className="absolute bottom-5 left-5 text-[10px] font-semibold uppercase tracking-[.2em] text-[#11191d]/60">Ilham / 2026</p>
       </motion.div>
+      <motion.aside initial={reduceMotion ? false : { opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: .3, duration: .7 }} className="max-w-xs self-center space-y-9 text-sm">
+        <div><p className="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-cyan-100/60">About me</p><p className="leading-relaxed text-white/60">{profile.about}</p><a href="#about" className="mt-3 inline-flex items-center gap-2 text-xs text-white hover:text-cyan-200">Read more <ArrowUpRight size={13} /></a></div>
+        <div><p className="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-cyan-100/60">My work</p><p className="leading-relaxed text-white/60">Web applications, experiments, and projects built while learning full-stack development.</p><a href="#work" className="mt-3 inline-flex items-center gap-2 text-xs text-white hover:text-cyan-200">Browse projects <ArrowUpRight size={13} /></a></div>
+        <div><p className="mb-3 text-[10px] font-semibold uppercase tracking-[.24em] text-cyan-100/60">Follow me</p><div className="flex gap-4 text-xs text-white/70"><a href={profile.github} target="_blank" rel="noreferrer" className="hover:text-white">GitHub</a><a href={profile.linkedin} target="_blank" rel="noreferrer" className="hover:text-white">LinkedIn</a></div></div>
+      </motion.aside>
     </div>
-    <div className="mx-auto mt-24 max-w-7xl border-t border-black/10 pt-5 text-xs uppercase tracking-[.2em] text-zinc-400"><span>Scroll to explore</span><span className="float-right">01 — 04</span></div>
   </section>
 }

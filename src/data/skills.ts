@@ -1,4 +1,4 @@
 export const skillGroups = [
-  { label: "Design", items: ["Product thinking", "UX research", "Interface design", "Prototyping"] },
-  { label: "Development", items: ["TypeScript", "React & Next.js", "Tailwind CSS", "Accessible UI"] },
+  { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS"] },
+  { label: "Currently exploring", items: ["Node.js", "REST APIs", "Databases", "Artificial intelligence"] },
 ]
