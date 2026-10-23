@@ -1,93 +1,107 @@
+export type ProjectStatus = "Completed" | "In Progress" | "Concept" | "Coursework"
+
 export type Project = {
   slug: string
   title: string
   category: string
   year: string
+  status: ProjectStatus
   description: string
   longDescription: string
+  goal: string
+  implementation: string
+  role: string
+  learning: string
   tags: string[]
   color: string
-  role: string
-  outcome: string
   github?: string
   live?: string
+  image?: string
 }
 
 export const projects: Project[] = [
   {
-    slug: "portfolio-studio",
-    title: "Portfolio Studio",
-    category: "Web Development",
-    year: "2024",
-    description: "A portfolio website for presenting projects, skills, and contact information in one place.",
-    longDescription: "Portfolio Studio is a portfolio website built to make project work easier to browse. It brings the introduction, selected projects, skills, and contact links into a simple responsive layout.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    color: "#1d4ed8",
-    role: "Product design & development",
-    outcome: "A responsive place to present projects and skills.",
-  },
-  {
-    slug: "signal-dashboard",
-    title: "Signal Dashboard",
-    category: "Product Design",
-    year: "2024",
-    description: "A dashboard concept for viewing important product metrics without losing the underlying detail.",
-    longDescription: "Signal Dashboard is a UI exploration focused on presenting product metrics in a clearer hierarchy. The layout keeps key signals visible first while allowing users to inspect more detail when needed.",
-    tags: ["UX Research", "UI Design", "Prototyping"],
-    color: "#0f766e",
-    role: "Research, UX & interface design",
-    outcome: "A clearer way to scan metrics and inspect supporting detail.",
-  },
-  {
-    slug: "local-commerce",
-    title: "Local Commerce",
-    category: "Web Development",
-    year: "2023",
-    description: "A responsive storefront concept for browsing and buying products from local businesses.",
-    longDescription: "Local Commerce is a responsive storefront concept with product discovery, product details, and a straightforward purchase flow. The project explores how a local business can present its products clearly across screen sizes.",
-    tags: ["React", "Responsive UI", "Design System"],
-    color: "#9333ea",
-    role: "Interface design & front-end development",
-    outcome: "A straightforward browsing and purchase flow for local products.",
-  },
-  {
-    slug: "sewa-alat-outdoor",
-    title: "Sewa Alat Outdoor",
-    category: "Web Development",
-    year: "2026",
-    description: "Admin panel untuk mengelola alat, data penyewaan, dan status pengembalian dalam satu dashboard.",
-    longDescription: "Sewa Alat Outdoor adalah aplikasi administrasi untuk membantu bisnis rental mengelola daftar alat, data pelanggan, transaksi penyewaan, dan status pengembalian dalam satu tempat.",
-    tags: ["Next.js", "Admin Panel", "Rental Management"],
-    color: "#166534",
-    role: "Product design & development",
-    outcome: "A focused digital workspace for running outdoor equipment rentals.",
-    live: "https://sewa-alat-outdoor-omega.vercel.app/",
-  },
-  {
     slug: "repoinsight-ai",
     title: "RepoInsight AI",
-    category: "Product Development",
+    category: "AI & Computer Vision",
     year: "2026",
-    description: "Tool yang membantu developer memahami struktur repository dan mendapatkan ringkasan awal dari codebase.",
-    longDescription: "RepoInsight AI adalah eksperimen aplikasi yang membantu developer mendapatkan gambaran awal tentang struktur repository. Project ini mengeksplorasi bagaimana AI dapat digunakan untuk merangkum konteks codebase dan mempercepat proses memahami project baru.",
-    tags: ["AI Product", "Developer Tools", "Web App"],
+    status: "In Progress",
+    description: "Eksperimen AI untuk membantu developer mendapatkan gambaran awal tentang struktur repository.",
+    longDescription: "RepoInsight AI mengeksplorasi penggunaan AI untuk membantu memahami codebase. Repository dan demo publik tersedia, tetapi project ini masih dalam tahap pengembangan.",
+    goal: "Mengeksplorasi bagaimana ringkasan berbasis AI dapat membantu developer memahami project baru.",
+    implementation: "Project menggunakan Python berdasarkan bahasa utama repository. Detail fitur dan arsitektur dapat dilihat langsung pada repository.",
+    role: "Development and experimentation",
+    learning: "Mempelajari penerapan AI untuk developer tools dan pentingnya memberikan konteks yang jelas kepada pengguna.",
+    tags: ["Python", "AI", "Developer Tools"],
     color: "#4338ca",
-    role: "Product design & development",
-    outcome: "A clearer starting point for exploring and understanding codebases.",
+    github: "https://github.com/IlhamDharm/repoinsight-ai",
     live: "https://repoinsight-ai-psi.vercel.app/",
   },
   {
     slug: "safehike",
     title: "SafeHike",
-    category: "Product Design",
+    category: "Software Development",
     year: "2026",
-    description: "Aplikasi konsep untuk membantu pendaki memeriksa persiapan perjalanan dan informasi keselamatan sebelum berangkat.",
-    longDescription: "SafeHike adalah konsep aplikasi yang membantu pendaki menyiapkan perjalanan dengan memeriksa kebutuhan dasar, kondisi jalur, dan informasi keselamatan sebelum berangkat.",
-    tags: ["UX Design", "Outdoor Tech", "Responsive UI"],
+    status: "In Progress",
+    description: "Project outdoor yang mengeksplorasi cara membantu pendaki membuat persiapan perjalanan yang lebih aman.",
+    longDescription: "SafeHike adalah project publik berbasis TypeScript yang berfokus pada pengalaman digital untuk aktivitas hiking. Implementasi dan status terbaru dapat diperiksa melalui repository dan demo yang tersedia.",
+    goal: "Mengeksplorasi aplikasi yang dapat mendukung persiapan dan kesadaran keselamatan sebelum aktivitas outdoor.",
+    implementation: "Repository menggunakan TypeScript. Detail implementasi dan fitur yang tersedia ditunjukkan pada source code project.",
+    role: "Product development",
+    learning: "Belajar menerjemahkan kebutuhan pengguna outdoor menjadi ide dan alur aplikasi.",
+    tags: ["TypeScript", "Web App", "Outdoor Tech"],
     color: "#b45309",
-    role: "Product design & development",
-    outcome: "A safety-minded experience for planning and enjoying hikes responsibly.",
+    github: "https://github.com/IlhamDharm/SafeHike",
     live: "https://safehike.vercel.app/",
+  },
+  {
+    slug: "sewa-alat-outdoor",
+    title: "CampSpot / Sewa Alat Outdoor",
+    category: "Product Concept",
+    year: "2026",
+    status: "Concept",
+    description: "Konsep bisnis penyewaan peralatan outdoor untuk kebutuhan pendaki dan aktivitas alam.",
+    longDescription: "CampSpot adalah konsep technopreneurship yang dikembangkan untuk mengeksplorasi ide marketplace penyewaan perlengkapan outdoor. Repository publik tersedia, sementara implementasi aplikasinya masih perlu dikembangkan lebih lanjut.",
+    goal: "Menyusun konsep layanan yang memudahkan pengguna menemukan dan menyewa peralatan outdoor.",
+    implementation: "Repository publik menggunakan HTML. Detail implementasi saat ini dapat dilihat pada source code dan demo yang tersedia.",
+    role: "Concept and project development",
+    learning: "Belajar menghubungkan ide bisnis, kebutuhan pengguna, dan kemungkinan implementasi digital.",
+    tags: ["HTML", "Business Concept", "Outdoor Rental"],
+    color: "#166534",
+    github: "https://github.com/IlhamDharm/Sewa-Alat-Outdoor",
+    live: "https://sewa-alat-outdoor-omega.vercel.app/",
+  },
+  {
+    slug: "mobile-development-course",
+    title: "Mobile Development Learning",
+    category: "Mobile Development",
+    year: "2026",
+    status: "Coursework",
+    description: "Dokumentasi pembelajaran Flutter dan Dart melalui latihan UI, responsive design, navigation, state management, dan API.",
+    longDescription: "Repository ini mendokumentasikan proses pembelajaran mata kuliah Mobile Development. Isinya mencakup latihan bertahap untuk memahami ekosistem Flutter, UI declarative, desain responsive, navigation, state management, dan integrasi API.",
+    goal: "Membangun pemahaman dasar pengembangan aplikasi mobile berbasis Flutter.",
+    implementation: "Repository menggunakan Dart dan Flutter dengan beberapa folder latihan berdasarkan materi perkuliahan.",
+    role: "Student developer",
+    learning: "Memahami struktur aplikasi Flutter, pola UI declarative, dan proses pengembangan mobile secara bertahap.",
+    tags: ["Flutter", "Dart", "Responsive UI"],
+    color: "#075985",
+    github: "https://github.com/IlhamDharm/244107020220-mobile-course",
+  },
+  {
+    slug: "machine-learning-coursework",
+    title: "Machine Learning Coursework",
+    category: "AI & Computer Vision",
+    year: "2026",
+    status: "Coursework",
+    description: "Repository pembelajaran machine learning berbasis notebook untuk mendokumentasikan eksperimen dan materi perkuliahan.",
+    longDescription: "Repository machine learning publik ini berisi pekerjaan pembelajaran berbasis Jupyter Notebook. Detail eksperimen dan hasil perlu dibaca langsung dari notebook terkait, sehingga portfolio ini tidak mengklaim hasil yang belum diverifikasi.",
+    goal: "Membangun dasar pemahaman tentang machine learning melalui latihan dan eksperimen terarah.",
+    implementation: "Repository menggunakan Jupyter Notebook sebagai format utama dengan bahasa yang tercatat sebagai Jupyter Notebook di GitHub.",
+    role: "Student learner",
+    learning: "Mendalami alur eksperimen machine learning dan cara mendokumentasikan proses belajar secara reproducible.",
+    tags: ["Machine Learning", "Jupyter Notebook", "Python"],
+    color: "#7c2d12",
+    github: "https://github.com/IlhamDharm/244107020220-machine-learning",
   },
 ]
 
