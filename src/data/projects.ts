@@ -17,6 +17,7 @@ export type Project = {
   github?: string
   live?: string
   image?: string
+  images?: string[]
 }
 
 export const projects: Project[] = [
@@ -53,15 +54,22 @@ export const projects: Project[] = [
     color: "#b45309",
     github: "https://github.com/IlhamDharm/SafeHike",
     live: "https://safehike.vercel.app/",
+    image: "/projects/safehike/beranda.png",
+    images: [
+      "/projects/safehike/beranda.png",
+      "/projects/safehike/katalog-gunung.png",
+      "/projects/safehike/informasi-gunung.png",
+      "/projects/safehike/informasi-peta-gunung.png",
+    ],
   },
   {
     slug: "sewa-alat-outdoor",
-    title: "CampSpot / Sewa Alat Outdoor",
+    title: "Rimba",
     category: "Product Concept",
     year: "2026",
     status: "Concept",
     description: "Konsep bisnis penyewaan peralatan outdoor untuk kebutuhan pendaki dan aktivitas alam.",
-    longDescription: "CampSpot adalah konsep technopreneurship yang dikembangkan untuk mengeksplorasi ide marketplace penyewaan perlengkapan outdoor. Repository publik tersedia, sementara implementasi aplikasinya masih perlu dikembangkan lebih lanjut.",
+    longDescription: "Rimba adalah konsep technopreneurship yang dikembangkan untuk mengeksplorasi ide marketplace penyewaan perlengkapan outdoor. Repository publik tersedia, sementara implementasi aplikasinya masih perlu dikembangkan lebih lanjut.",
     goal: "Menyusun konsep layanan yang memudahkan pengguna menemukan dan menyewa peralatan outdoor.",
     implementation: "Repository publik menggunakan HTML. Detail implementasi saat ini dapat dilihat pada source code dan demo yang tersedia.",
     role: "Concept and project development",
@@ -70,6 +78,7 @@ export const projects: Project[] = [
     color: "#166534",
     github: "https://github.com/IlhamDharm/Sewa-Alat-Outdoor",
     live: "https://sewa-alat-outdoor-omega.vercel.app/",
+    image: "/projects/rimba-homepage.png",
   },
   {
     slug: "mobile-development-course",
