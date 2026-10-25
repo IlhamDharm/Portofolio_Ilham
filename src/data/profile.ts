@@ -10,5 +10,5 @@ export const profile = {
   whatsapp: "6282232019438",
   whatsappDisplay: "+62 822-3201-9438",
   github: "https://github.com/IlhamDharm",
-  linkedin: "https://www.linkedin.com/in/ilham-dharma-726776325/",
+  linkedin: "https://www.linkedin.com/in/ilham-dharma-atmaja-98823432a/",
 }
