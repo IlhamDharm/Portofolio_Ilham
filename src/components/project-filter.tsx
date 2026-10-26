@@ -6,17 +6,12 @@ import { projects } from "@/src/data/projects"
 import { ProjectCard } from "@/src/components/project-card"
 
 const filters = ["All", ...Array.from(new Set(projects.map((project) => project.category)))]
+const featuredSlug = "ncs-polinema"
 
 export function ProjectFilter() {
-  const [filter, setFilter] = useState("All")
-  const [query, setQuery] = useState("")
+  const [filter, setFilter] = useState("All"); const [query, setQuery] = useState("")
   const filtered = useMemo(() => projects.filter((project) => (filter === "All" || project.category === filter) && `${project.title} ${project.description} ${project.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase())), [filter, query])
-
-  return <div>
-    <div className="mb-10 flex flex-col gap-5 border-y border-black/10 py-5 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-2 overflow-x-auto" role="group" aria-label="Filter projects"><SlidersHorizontal size={16} className="mr-2 shrink-0 text-zinc-400" />{filters.map((item) => <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={filter === item} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${filter === item ? "bg-black text-white" : "text-zinc-500 hover:bg-zinc-100"}`}>{item}</button>)}</div>
-      <label className="flex items-center gap-2 border-b border-black/15 pb-2 text-sm text-zinc-400 focus-within:border-black"><Search size={16} /><span className="sr-only">Search projects</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" className="w-full bg-transparent outline-none placeholder:text-zinc-400 sm:w-40" /></label>
-    </div>
-    {filtered.length ? <div className="grid gap-12 md:grid-cols-2">{filtered.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div> : <div className="border border-dashed border-black/15 py-20 text-center text-zinc-500">No projects found. Try another search.</div>}
-  </div>
+  const ordered = useMemo(() => [...filtered].sort((a, b) => Number(b.slug === featuredSlug) - Number(a.slug === featuredSlug)), [filtered])
+  const showFeatured = filter === "All" && query.trim() === "" && ordered[0]?.slug === featuredSlug
+  return <div><div className="mb-12 flex flex-col gap-5 border-y border-black/15 py-5 sm:flex-row sm:items-center sm:justify-between"><div className="flex items-center gap-2 overflow-x-auto" role="group" aria-label="Filter projects"><SlidersHorizontal size={15} className="mr-2 shrink-0 text-[#7d857a]" />{filters.map((item) => <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={filter === item} className={`whitespace-nowrap px-3 py-2 text-xs font-semibold uppercase tracking-[.12em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#66705e] ${filter === item ? "bg-[#101312] text-white" : "text-[#7d857a] hover:text-[#101312]"}`}>{item}</button>)}</div><label className="flex items-center gap-2 border-b border-black/15 pb-2 text-sm text-[#7d857a] focus-within:border-black"><Search size={15} /><span className="sr-only">Search projects</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects" className="w-full bg-transparent outline-none placeholder:text-[#9ca39a] sm:w-40" /></label></div>{ordered.length ? <div className="grid gap-16 md:grid-cols-2">{ordered.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} featured={showFeatured && index === 0} />)}</div> : <div className="border border-dashed border-black/15 py-20 text-center text-[#68706a]">No projects found. Try another search.</div>}</div>
 }
