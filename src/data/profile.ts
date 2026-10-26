@@ -11,4 +11,7 @@ export const profile = {
   whatsappDisplay: "+62 822-3201-9438",
   github: "https://github.com/IlhamDharm",
   linkedin: "https://www.linkedin.com/in/ilham-dharma-atmaja-98823432a/",
+  cv: "https://drive.google.com/file/d/1OpgruHQWHP6x5JuXaLDANxPUs__g5tDr/view",
+  githubRepos: "21 public repositories",
+  githubFocus: ["AI & developer tools", "Backend & full-stack development", "Outdoor applications"],
 }

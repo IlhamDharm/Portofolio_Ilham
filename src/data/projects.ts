@@ -18,6 +18,7 @@ export type Project = {
   live?: string
   image?: string
   images?: string[]
+  proof?: string[]
 }
 
 export const projects: Project[] = [
@@ -37,6 +38,7 @@ export const projects: Project[] = [
     color: "#4338ca",
     github: "https://github.com/IlhamDharm/repoinsight-ai",
     live: "https://repoinsight-ai-psi.vercel.app/",
+    proof: ["Public repository", "Live demo", "AI developer tool experiment"],
   },
   {
     slug: "safehike",
@@ -61,6 +63,7 @@ export const projects: Project[] = [
       "/projects/safehike/informasi-gunung.png",
       "/projects/safehike/informasi-peta-gunung.png",
     ],
+    proof: ["4 interface screens", "Public repository", "Live demo"],
   },
   {
     slug: "sewa-alat-outdoor",
@@ -79,6 +82,7 @@ export const projects: Project[] = [
     github: "https://github.com/IlhamDharm/Sewa-Alat-Outdoor",
     live: "https://sewa-alat-outdoor-omega.vercel.app/",
     image: "/projects/rimba-homepage.png",
+    proof: ["Product concept", "Public repository", "Live demo"],
   },
   {
     slug: "ncs-polinema",
@@ -104,6 +108,7 @@ export const projects: Project[] = [
       "/projects/ncs/layanan.png",
       "/projects/ncs/galeri.png",
     ],
+    proof: ["5 interface screens", "Authentication and CRUD", "PostgreSQL system"],
   },
   {
     slug: "mobile-development-course",
