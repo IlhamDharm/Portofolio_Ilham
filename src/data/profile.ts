@@ -1,6 +1,6 @@
 export const profile = {
   name: "Ilham Dharma Atmaja",
-  brand: "ilham.",
+  brand: "ilham",
   role: "Full-Stack Developer Intern / Software Developer Intern",
   headline: "Building software, one project at a time.",
   intro: "Saya mahasiswa IT yang tertarik pada software development, pengembangan aplikasi, dan Artificial Intelligence. Saya terus mengembangkan kemampuan melalui proyek, eksperimen, dan pembelajaran mandiri.",

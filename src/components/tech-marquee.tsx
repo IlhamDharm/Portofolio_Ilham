@@ -18,5 +18,5 @@ function ToolSequence() { return <div className="tech-marquee-sequence flex shri
 
 export function TechMarquee() {
   const reduceMotion = useReducedMotion()
-  return <section aria-label="Tools used in this portfolio" className="overflow-hidden border-y border-white/10 bg-[#101312] py-5 text-[#d7f34a]"><div className={`tech-marquee-track ${reduceMotion ? "tech-marquee-static" : ""}`}><ToolSequence /><div aria-hidden="true"><ToolSequence /></div></div></section>
+  return <section aria-label="Selected tools used in this portfolio" className="relative overflow-hidden border-y border-white/10 bg-[#101312] py-4 text-[#d7f34a]"><span aria-hidden="true" className="absolute left-5 top-1 z-10 bg-[#101312] px-2 text-[8px] font-semibold uppercase tracking-[.2em] text-white/35 sm:left-8">Tech I use</span><div className={`tech-marquee-track ${reduceMotion ? "tech-marquee-static" : ""}`}><ToolSequence /><div aria-hidden="true"><ToolSequence /></div></div></section>
 }
