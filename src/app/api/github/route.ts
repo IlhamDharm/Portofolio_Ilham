@@ -32,8 +32,9 @@ async function getCommits() {
   return body.items.slice(0, 6).flatMap((item) => { const repository = item.repository?.full_name; const sha = item.sha; const url = item.html_url; if (!repository || !sha || !url) return []; const message = item.commit?.message?.split("\n")[0]?.trim(); const date = item.commit?.committer?.date || item.commit?.author?.date; if (!message || !date) return []; return [{ repository, message, sha, url, date }] })
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   if (!process.env.GITHUB_TOKEN) return jsonError(503)
+  const refresh = new URL(request.url).searchParams.has("refresh")
   const [calendarResult, commitsResult] = await Promise.allSettled([getCalendar(), getCommits()]); const calendar = calendarResult.status === "fulfilled" ? calendarResult.value : null; const commits = commitsResult.status === "fulfilled" ? commitsResult.value : []; if (!calendar && !commits.length) return jsonError(502)
-  return NextResponse.json({ status: calendar && commits.length ? "ok" : "partial", calendar, commits }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } })
+  return NextResponse.json({ status: calendar && commits.length ? "ok" : "partial", calendar, commits }, { headers: { "Cache-Control": refresh ? "no-store" : "public, s-maxage=300, stale-while-revalidate=600" } })
 }
