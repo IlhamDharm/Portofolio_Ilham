@@ -23,6 +23,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "rawatrumah",
+    title: "RawatRumah",
+    category: "Home Maintenance",
+    year: "2026",
+    status: "In Progress",
+    description: "Dashboard untuk membantu pemilik rumah mengelola barang, jadwal perawatan, riwayat servis, dan anggaran dalam satu tempat.",
+    longDescription: "RawatRumah adalah aplikasi perawatan rumah yang membantu pengguna memantau kondisi barang rumah tangga, menjadwalkan servis, melihat riwayat perawatan, serta mengelola biaya rumah.",
+    goal: "Membantu pemilik rumah merawat perangkat dan fasilitas rumah secara lebih teratur melalui pengingat, pencatatan servis, dan pemantauan biaya.",
+    implementation: "Aplikasi web dengan dashboard yang menampilkan ringkasan barang rumah, jadwal perawatan mendatang, aktivitas terakhir, status perangkat, dan teknisi langganan.",
+    role: "Product development",
+    learning: "Mengeksplorasi perancangan dashboard untuk mengorganisasi kebutuhan perawatan rumah dan menyajikan informasi penting secara ringkas.",
+    tags: ["Home Maintenance", "Dashboard", "Web App"],
+    color: "#166534",
+    github: "https://github.com/IlhamDharm/RawatRumah",
+    live: "https://rawat-rumah.vercel.app/dashboard",
+    proof: ["Maintenance dashboard", "Service scheduling", "Expense tracking"],
+  },
+  {
     slug: "repoinsight-ai",
     title: "RepoInsight AI",
     category: "AI & Computer Vision",
