@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight, Code2, ExternalLink } from "lucide-react"
+import { ViewTransition } from "react"
 import { motion, useReducedMotion } from "motion/react"
 import type { Project } from "@/src/data/projects"
 
@@ -13,17 +14,19 @@ export function ProjectCard({ project, index = 0, featured = false }: ProjectCar
   const shortDescription = project.description.length > 150 ? `${project.description.slice(0, 150).trimEnd()}…` : project.description
   const projectHref = `/projects/${project.slug}`
 
-  return <motion.article initial={reduceMotion ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .2 }} transition={{ duration: .6, delay: reduceMotion ? 0 : index * .08, ease: "easeOut" }} className={`group relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/55 p-3 shadow-[0_14px_40px_rgba(16,19,18,.05)] transition-[border-color,box-shadow,transform] duration-500 hover:-translate-y-1 hover:border-[#66705e]/40 hover:shadow-[0_28px_70px_rgba(16,19,18,.13)] sm:p-4 ${featured ? "md:col-span-2" : ""}`}>
+  return <motion.article initial={reduceMotion ? false : { opacity: 0, y: 32, scale: .985 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: .18 }} transition={{ duration: reduceMotion ? .01 : .8, delay: reduceMotion ? 0 : Math.min(index * .09, .27), ease: [.22, 1, .36, 1] }} className={`group relative overflow-hidden rounded-[2rem] border border-black/10 bg-white/55 p-3 shadow-[0_14px_40px_rgba(16,19,18,.05)] transition-[border-color,box-shadow,transform] duration-500 hover:border-[#66705e]/40 hover:shadow-[0_28px_70px_rgba(16,19,18,.13)] ${reduceMotion ? "" : "hover:-translate-y-1"} sm:p-4 ${featured ? "md:col-span-2" : ""}`}>
     <Link href={projectHref} aria-label={`View ${project.title} case study`} className="block rounded-[1.5rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#66705e]">
-      <div className={`relative isolate overflow-hidden rounded-[1.45rem] bg-[#202521] ${featured ? "aspect-[1.45/1] sm:aspect-[2.45/1]" : "aspect-[1.18/1] sm:aspect-[1.4/1]"}`} style={{ backgroundColor: project.color }}>
-        {project.image ? <Image src={project.image} alt={`${project.title} project preview`} fill sizes={featured ? "(min-width: 768px) 100vw, 100vw" : "(min-width: 768px) 50vw, 100vw"} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]" /> : <>
-          <div className="absolute inset-0 opacity-80" style={{ background: `radial-gradient(circle at 75% 18%, rgba(215,243,74,.42), transparent 30%), linear-gradient(135deg, ${project.color}, #101312 115%)` }} />
-          <div aria-hidden="true" className="absolute -right-[8%] top-[12%] aspect-square w-[42%] rounded-full border border-white/20 transition-transform duration-700 group-hover:scale-110"><div className="absolute inset-[12%] rounded-full border border-white/15" /><div className="absolute inset-[26%] rounded-full border border-white/10" /></div>
-        </>}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#101312]/70 via-transparent to-[#101312]/10 transition-opacity duration-500 group-hover:from-[#101312]/55" />
-        <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-[#101312]/45 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white backdrop-blur-md sm:left-6 sm:top-6"><span className="size-1.5 rounded-full bg-[#d7f34a]" />{project.category}</div>
-        <span aria-hidden="true" className="absolute bottom-4 right-4 flex size-11 items-center justify-center rounded-full bg-[#d7f34a] text-[#101312] shadow-lg transition-transform duration-300 group-hover:rotate-45 sm:bottom-6 sm:right-6"><ArrowUpRight size={18} /></span>
-      </div>
+      <ViewTransition name={`project-media-${project.slug}`} share="morph" default="none">
+        <div className={`relative isolate overflow-hidden rounded-[1.45rem] bg-[#202521] ${featured ? "aspect-[1.45/1] sm:aspect-[2.45/1]" : "aspect-[1.18/1] sm:aspect-[1.4/1]"}`} style={{ backgroundColor: project.color }}>
+          {project.image ? <Image src={project.image} alt={`${project.title} project preview`} fill sizes={featured ? "(min-width: 768px) 100vw, 100vw" : "(min-width: 768px) 50vw, 100vw"} className="object-cover scale-[1.015] transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]" /> : <>
+            <div className="absolute inset-0 opacity-80" style={{ background: `radial-gradient(circle at 75% 18%, rgba(215,243,74,.42), transparent 30%), linear-gradient(135deg, ${project.color}, #101312 115%)` }} />
+            <div aria-hidden="true" className="absolute -right-[8%] top-[12%] aspect-square w-[42%] rounded-full border border-white/20 transition-transform duration-700 group-hover:scale-110"><div className="absolute inset-[12%] rounded-full border border-white/15" /><div className="absolute inset-[26%] rounded-full border border-white/10" /></div>
+          </>}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#101312]/70 via-transparent to-[#101312]/10 transition-opacity duration-500 group-hover:from-[#101312]/55" />
+          <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-[#101312]/45 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white backdrop-blur-md sm:left-6 sm:top-6"><span className="size-1.5 rounded-full bg-[#d7f34a]" />{project.category}</div>
+          <span aria-hidden="true" className="absolute bottom-4 right-4 flex size-11 items-center justify-center rounded-full bg-[#d7f34a] text-[#101312] shadow-lg transition-transform duration-300 group-hover:rotate-45 sm:bottom-6 sm:right-6"><ArrowUpRight size={18} /></span>
+        </div>
+      </ViewTransition>
     </Link>
 
     <div className="px-2 pb-2 pt-5 sm:px-3 sm:pb-3 sm:pt-7">
