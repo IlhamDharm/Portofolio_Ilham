@@ -9,6 +9,8 @@ type ConnectItem = { label: string; href: string; icon?: string; external?: bool
 const items: ConnectItem[] = [
   { label: "GitHub", href: profile.github, icon: "github", external: true },
   { label: "LinkedIn", href: profile.linkedin, icon: "linkedin", external: true },
+  { label: "Instagram", href: "https://www.instagram.com/ilhmdharm/", icon: "instagram", external: true },
+  { label: "TikTok", href: "https://www.tiktok.com/@ilhmdharm?is_from_webapp=1&sender_device=pc", icon: "tiktok", external: true },
   { label: "WhatsApp", href: `https://wa.me/${profile.whatsapp}`, icon: "whatsapp", external: true },
   { label: "Email", href: `mailto:${profile.email}` },
 ]
