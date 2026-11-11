@@ -4,12 +4,49 @@ import { Hero } from "@/src/components/hero"
 import { About } from "@/src/components/about"
 import { Skills } from "@/src/components/skills"
 import { ProjectFilter } from "@/src/components/project-filter"
-import { Contact, Footer } from "@/src/components/contact"
+import { Education } from "@/src/components/education"
+import { GithubActivity } from "@/src/components/github-activity"
 import { ActivityGallery } from "@/src/components/activity-gallery"
 import { TechMarquee } from "@/src/components/tech-marquee"
-import { HowIWork } from "@/src/components/how-i-work"
-import { GithubActivity } from "@/src/components/github-activity"
+import { Contact, Footer } from "@/src/components/contact"
 import { profile } from "@/src/data/profile"
 
-export const metadata: Metadata = { title: "Ilham Dharma Atmaja — Software Developer", description: "Portfolio of Ilham Dharma Atmaja, an IT student building useful software through projects and experiments." }
-export default function Home() { return <><Navbar /><main><Hero /><TechMarquee /><About /><Skills /><HowIWork /><GithubActivity profileUrl={profile.github} /><section id="work" className="bg-[#f3f4ed] px-5 py-24 sm:px-8 lg:px-12 lg:py-36"><div className="mx-auto max-w-[1500px]"><div className="mb-14 grid gap-8 lg:grid-cols-[.5fr_1.5fr] lg:items-end"><div><h2 className="font-display text-[clamp(3rem,7vw,7rem)] font-semibold leading-[.82] tracking-[-.09em]">Things I&apos;ve<br /><span className="text-[#66705e]">built.</span></h2><p className="mt-7 max-w-md text-sm leading-relaxed text-[#68706a]">Coursework, experiments, and concepts shaped by curiosity and a desire to make useful digital experiences.</p></div></div><ProjectFilter /></div></section><ActivityGallery /><Contact /></main><Footer /></> }
+export const metadata: Metadata = {
+  title: "Ilham Dharma Atmaja — Software Engineer",
+  description: "Portfolio of Ilham Dharma Atmaja, Informatics Engineering student building high-performance web applications and software systems.",
+}
+
+export default function Home() {
+  return (
+    <>
+      <Navbar />
+      <main className="bg-[#F5F5F0] text-[#111112]">
+        <Hero />
+        <TechMarquee />
+        <About />
+
+        {/* ── ON TRACK PROJECTS SECTION ── */}
+        <section id="projects" className="relative border-t border-[#111112]/10 bg-[#F5F5F0] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+          <div className="mx-auto max-w-[1340px]">
+            {/* Section Header */}
+            <div className="mb-14">
+              <h2 className="font-editorial text-5xl font-normal tracking-tight text-[#111112] sm:text-6xl lg:text-7xl">
+                Selected Works<span className="italic text-[#888888]">.</span>
+              </h2>
+            </div>
+
+            {/* Filter & Showcase */}
+            <ProjectFilter />
+          </div>
+        </section>
+
+        <GithubActivity profileUrl={profile.github} />
+        <Skills />
+        <Education />
+        <ActivityGallery />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  )
+}

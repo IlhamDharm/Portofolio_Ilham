@@ -1,18 +1,204 @@
 "use client"
 
-import { ArrowUpRight } from "lucide-react"
-import { motion, useReducedMotion } from "motion/react"
-import { useEffect, useMemo, useState } from "react"
+import { ArrowUpRight, RotateCcw } from "lucide-react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 type GithubContribution = { date: string; count: number; color: string; level: number }
 type GithubCommit = { repository: string; message: string; sha: string; url: string; date: string }
-type GithubPayload = { status: "ok" | "partial" | "error"; message?: string; calendar?: { total: number; from: string; to: string; weeks: GithubContribution[][] } | null; commits: GithubCommit[] }
-const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "short" }); const dayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" }); const commitDateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" })
-function levelClass(level: number) { return ["bg-[#18202b]", "bg-[#243b64]", "bg-[#315b9b]", "bg-[#4c86d9]", "bg-[#79aef5]"][Math.min(level, 4)] }
+type GithubPayload = {
+  status: "ok" | "partial" | "error"
+  message?: string
+  calendar?: { total: number; from: string; to: string; weeks: GithubContribution[][] } | null
+  commits: GithubCommit[]
+}
+
+const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "short" })
+const dayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" })
+const commitDateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" })
+
+// Lando Norris Telemetry Colors: Monotone Black to Electric Neon Lime
+function levelClass(level: number) {
+  return [
+    "bg-[#111112]/5 border border-black/5",
+    "bg-[#111112]/25",
+    "bg-[#111112]/60",
+    "bg-[#D2FF00]/80 border border-[#111112]/30",
+    "bg-[#D2FF00] shadow-[0_0_8px_rgba(210,255,0,0.8)] border border-[#111112]",
+  ][Math.min(level, 4)]
+}
+
 export function GithubActivity({ profileUrl }: { profileUrl: string }) {
-  const [payload, setPayload] = useState<GithubPayload | null>(null); const [loading, setLoading] = useState(true); const reduceMotion = useReducedMotion()
-  const loadActivity = () => { const controller = new AbortController(); setLoading(true); fetch(`/api/github?refresh=${Date.now()}`, { signal: controller.signal, cache: "no-store" }).then(async (response) => { const data = await response.json() as GithubPayload; if (!response.ok || data.status === "error") throw new Error("github_unavailable"); setPayload(data) }).catch(() => setPayload({ status: "error", commits: [] })).finally(() => setLoading(false)); return controller }
-  useEffect(() => { const controller = new AbortController(); fetch(`/api/github?refresh=${Date.now()}`, { signal: controller.signal, cache: "no-store" }).then(async (response) => { const data = await response.json() as GithubPayload; if (!response.ok || data.status === "error") throw new Error("github_unavailable"); setPayload(data) }).catch(() => setPayload({ status: "error", commits: [] })).finally(() => setLoading(false)); return () => controller.abort() }, [])
-  const calendar = payload?.calendar; const cells = useMemo(() => calendar?.weeks.flat() ?? [], [calendar]); const weeks = calendar?.weeks ?? []; const firstDate = cells[0]?.date; const lastDate = cells.at(-1)?.date
-  return <section id="github-activity" className="bg-[#101312] px-5 py-24 text-white sm:px-8 lg:px-12 lg:py-32"><div className="mx-auto max-w-[1500px]"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><h2 className="font-display text-[clamp(3rem,7vw,7rem)] font-semibold leading-[.8] tracking-[-.09em]">Building<br /><span className="text-white/45">in public.</span></h2></div><div className="max-w-sm"><p className="text-sm leading-relaxed text-white/55">A snapshot of my public coding activity over the last year. Consistency is part of the process.</p><a href={profileUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-[#d7f34a] hover:text-white">View GitHub profile <ArrowUpRight size={14} /></a></div></div><div className="mt-14 rounded-[1.5rem] border border-white/15 bg-[#0b0f0e] p-5 sm:p-7">{loading ? <div className="flex min-h-56 items-center justify-center text-sm text-white/45">Loading GitHub activity…</div> : calendar ? <div className="overflow-x-auto"><div className="min-w-[720px]"><div className="mb-4 flex items-center justify-between text-xs text-white/45"><span>{calendar.total.toLocaleString()} contributions in the last year</span><span>{firstDate && lastDate ? `${monthFormatter.format(new Date(firstDate))} — ${monthFormatter.format(new Date(lastDate))}` : ""}</span></div><div className="flex gap-2"><div className="flex w-6 flex-col justify-between py-5 text-[10px] text-white/35"><span>Mon</span><span>Wed</span><span>Fri</span></div><div className="flex flex-1 gap-1.5">{weeks.map((week, weekIndex) => <div key={weekIndex} className="flex flex-col gap-1.5">{week.map((cell) => <motion.div key={cell.date} initial={reduceMotion ? false : { opacity: 0, scale: .65 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: false, amount: .65 }} transition={{ duration: .22 }} title={`${cell.count} contribution${cell.count === 1 ? "" : "s"} on ${dayFormatter.format(new Date(cell.date))}`} className={`size-3 rounded-[3px] sm:size-3.5 ${levelClass(cell.level)}`} />)}</div>)}</div></div><div className="mt-5 flex items-center justify-between text-[10px] text-white/35"><span>Hover a square to inspect a day</span><span className="flex items-center gap-2">Less <i className="size-3 rounded-[3px] bg-[#18202b]" /><i className="size-3 rounded-[3px] bg-[#243b64]" /><i className="size-3 rounded-[3px] bg-[#315b9b]" /><i className="size-3 rounded-[3px] bg-[#4c86d9]" /><i className="size-3 rounded-[3px] bg-[#79aef5]" /> More</span></div></div></div> : <div className="flex min-h-56 flex-col items-center justify-center gap-4 text-center"><p className="text-sm text-white/45">GitHub activity is temporarily unavailable.</p><div className="flex flex-wrap items-center justify-center gap-4"><button type="button" onClick={loadActivity} className="text-xs font-semibold uppercase tracking-[.14em] text-[#d7f34a] hover:text-white">Try again</button><a href={profileUrl} target="_blank" rel="noreferrer" className="text-xs font-semibold uppercase tracking-[.14em] text-[#d7f34a] hover:text-white">Open GitHub profile →</a></div></div>}</div><div className="mt-10 border-t border-white/10 pt-7"><div className="mb-5 flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-[.2em] text-white/45">Recent commits</p><span className="text-[10px] uppercase tracking-[.15em] text-white/30">{payload?.status === "partial" ? "Partially available" : "Live public activity"}</span></div>{loading ? <p className="text-sm text-white/45">Loading recent commits…</p> : payload?.commits.length ? <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-2">{payload.commits.map((commit, index) => <motion.a key={commit.sha} href={commit.url} target="_blank" rel="noreferrer" initial={reduceMotion ? false : { opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: reduceMotion ? 0 : index * .06 }} className="group bg-[#101312] p-5 transition-colors hover:bg-[#17201d]"><div className="flex items-start justify-between gap-4"><div><p className="text-sm font-semibold text-white">{commit.repository.split("/").at(-1)}</p><p className="mt-2 text-xs text-white/55">{commit.message}</p></div><ArrowUpRight size={16} className="shrink-0 text-[#d7f34a] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></div><p className="mt-5 text-[10px] uppercase tracking-[.14em] text-white/30">{commit.sha.slice(0, 7)} · {commitDateFormatter.format(new Date(commit.date))}</p></motion.a>)}</div> : <p className="text-sm text-white/45">No recent public commits available. <a href={profileUrl} target="_blank" rel="noreferrer" className="text-[#d7f34a] hover:text-white">Open GitHub profile →</a></p>}</div></div></section>
+  const [payload, setPayload] = useState<GithubPayload | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  const loadActivity = useCallback(() => {
+    const controller = new AbortController()
+    setLoading(true)
+    fetch(`/api/github?refresh=${Date.now()}`, { signal: controller.signal, cache: "no-store" })
+      .then(async (response) => {
+        const data = (await response.json()) as GithubPayload
+        if (!response.ok || data.status === "error") throw new Error("github_unavailable")
+        setPayload(data)
+      })
+      .catch(() => setPayload({ status: "error", commits: [] }))
+      .finally(() => setLoading(false))
+    return controller
+  }, [])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    fetch(`/api/github?refresh=${Date.now()}`, { signal: controller.signal, cache: "no-store" })
+      .then(async (response) => {
+        const data = (await response.json()) as GithubPayload
+        if (!response.ok || data.status === "error") throw new Error("github_unavailable")
+        setPayload(data)
+      })
+      .catch(() => setPayload({ status: "error", commits: [] }))
+      .finally(() => setLoading(false))
+    return () => controller.abort()
+  }, [])
+
+  const calendar = payload?.calendar
+  const cells = useMemo(() => calendar?.weeks.flat() ?? [], [calendar])
+  const weeks = calendar?.weeks ?? []
+  const firstDate = cells[0]?.date
+  const lastDate = cells.at(-1)?.date
+
+  return (
+    <section id="telemetry" className="relative border-t border-[#111112]/10 bg-[#F5F5F0] px-5 py-24 sm:px-8 lg:px-12 lg:py-28">
+      <div className="mx-auto max-w-[1340px]">
+        {/* Section Header */}
+        <div className="flex flex-col justify-between gap-4 border-b border-[#111112]/10 pb-6 md:flex-row md:items-end">
+          <div>
+            <h2 className="mt-2 font-editorial text-4xl font-normal tracking-tight text-[#111112] sm:text-5xl">
+              Codebase Activity &amp; Live Stream
+            </h2>
+          </div>
+          <div>
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 font-mono text-xs font-bold text-[#111112] hover:underline"
+            >
+              github.com/IlhamDharm <ArrowUpRight size={13} />
+            </a>
+          </div>
+        </div>
+
+        {/* Telemetry Calendar Box */}
+        <div className="mt-10 rounded-3xl border border-[#111112]/15 bg-white p-6 shadow-sm sm:p-8">
+          {loading ? (
+            <div className="flex min-h-48 items-center justify-center font-mono text-xs text-[#555555]">
+              <span className="mr-3 size-2 animate-ping rounded-full bg-[#D2FF00]" />
+              STREAMING GITHUB TELEMETRY...
+            </div>
+          ) : calendar ? (
+            <div className="overflow-x-auto">
+              <div className="min-w-[720px]">
+                <div className="mb-4 flex items-center justify-between font-mono text-xs text-[#555555]">
+                  <span>
+                    <strong className="text-[#111112]">{calendar.total.toLocaleString()}</strong> contributions recorded in the last year
+                  </span>
+                  <span className="text-[#888888]">
+                    {firstDate && lastDate
+                      ? `${monthFormatter.format(new Date(firstDate))} — ${monthFormatter.format(new Date(lastDate))}`
+                      : ""}
+                  </span>
+                </div>
+
+                {/* Grid */}
+                <div className="flex gap-2">
+                  <div className="flex w-6 flex-col justify-between py-4 font-mono text-[10px] text-[#888888]">
+                    <span>Mon</span>
+                    <span>Wed</span>
+                    <span>Fri</span>
+                  </div>
+                  <div className="flex flex-1 gap-1">
+                    {weeks.map((week, weekIndex) => (
+                      <div key={weekIndex} className="flex flex-col gap-1">
+                        {week.map((cell) => (
+                          <div
+                            key={cell.date}
+                            title={`${cell.count} commit${cell.count === 1 ? "" : "s"} on ${dayFormatter.format(new Date(cell.date))}`}
+                            className={`size-3 rounded-[3px] transition-transform hover:scale-125 sm:size-3.5 ${levelClass(cell.level)}`}
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Legend */}
+                <div className="mt-5 flex items-center justify-between font-mono text-[11px] text-[#888888]">
+                  <span>Hover telemetry squares to inspect detail</span>
+                  <div className="flex items-center gap-1.5">
+                    <span>Less</span>
+                    <span className="size-2.5 rounded-[2px] bg-black/5" />
+                    <span className="size-2.5 rounded-[2px] bg-[#111112]/25" />
+                    <span className="size-2.5 rounded-[2px] bg-[#111112]/60" />
+                    <span className="size-2.5 rounded-[2px] bg-[#D2FF00]/80" />
+                    <span className="size-2.5 rounded-[2px] bg-[#D2FF00]" />
+                    <span>More</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex min-h-48 flex-col items-center justify-center gap-3 text-center">
+              <p className="font-mono text-xs text-[#555555]">
+                Telemetry data cached or unavailable temporarily.
+              </p>
+              <button
+                type="button"
+                onClick={loadActivity}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#111112]/20 bg-[#F5F5F0] px-4 py-2 font-mono text-xs text-[#111112] hover:bg-[#111112] hover:text-white"
+              >
+                <RotateCcw size={13} /> Refresh Stream
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Recent Commits Log (Like Race Pit Stop Telemetry) */}
+        <div className="mt-12">
+          <div className="mb-4 font-mono text-xs font-bold uppercase tracking-wider text-[#111112]">
+            Recent Commit Log
+          </div>
+
+          {loading ? (
+            <p className="font-mono text-xs text-[#888888]">Loading commit stream...</p>
+          ) : payload?.commits?.length ? (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {payload.commits.map((commit) => (
+                <a
+                  key={commit.sha}
+                  href={commit.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex flex-col justify-between rounded-2xl border border-[#111112]/10 bg-white p-5 transition-all hover:border-[#111112] hover:shadow-md"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="font-mono text-xs font-bold text-[#111112]">
+                      {commit.repository.split("/").pop()}
+                    </span>
+                    <ArrowUpRight size={14} className="shrink-0 text-[#888888] transition-transform group-hover:text-[#111112]" />
+                  </div>
+                  <p className="mt-2 line-clamp-1 text-xs text-[#555555]">
+                    {commit.message}
+                  </p>
+                  <div className="mt-3 flex items-center justify-between font-mono text-[10px] text-[#888888]">
+                    <span>{commit.sha.slice(0, 7)}</span>
+                    <span>{commitDateFormatter.format(new Date(commit.date))}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="font-mono text-xs text-[#888888]">No recent public commits recorded.</p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
 }

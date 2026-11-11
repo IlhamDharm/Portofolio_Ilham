@@ -1,17 +1,54 @@
 "use client"
 
 import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
-import { motion, useReducedMotion } from "motion/react"
+import { Camera } from "lucide-react"
 
 const activities = [
-  { src: "/activities/activity-01.jpeg", label: "01 / In the moment", className: "-rotate-6 lg:translate-y-14" },
-  { src: "/activities/activity-02.jpeg", label: "02 / Personal archive", className: "rotate-3 lg:-translate-y-3" },
-  { src: "/activities/activity-03.jpeg", label: "03 / Daily life", className: "-rotate-2 lg:translate-y-1" },
-  { src: "/activities/activity-04.png", label: "04 / Outside the screen", className: "rotate-6 lg:translate-y-16" },
+  { src: "/activities/activity-01.jpeg", label: "Field Exploration & Moments", aspect: "aspect-[4/5]" },
+  { src: "/activities/activity-02.jpeg", label: "Campus & Creative Archive", aspect: "aspect-[4/5]" },
+  { src: "/activities/activity-03.jpeg", label: "Everyday Focus & Life", aspect: "aspect-[4/5]" },
+  { src: "/activities/activity-04.png", label: "Outdoor & Off-Screen", aspect: "aspect-[4/5]" },
 ]
 
 export function ActivityGallery() {
-  const reduceMotion = useReducedMotion()
-  return <section id="activities" className="overflow-hidden bg-[#f3f4ed] px-5 py-24 sm:px-8 lg:px-12 lg:py-36"><div className="mx-auto max-w-[1500px]"><div className="text-center"><h2 className="mx-auto max-w-3xl font-display text-[clamp(3.6rem,8vw,9rem)] font-semibold leading-[.78] tracking-[-.1em]">What&apos;s up<br /><span className="text-[#66705e]">in my world.</span></h2><p className="mx-auto mt-8 max-w-md text-sm leading-relaxed text-[#68706a]">A few moments, places, and activities that keep me curious beyond the screen.</p></div><div className="relative mx-auto mt-20 flex min-h-[480px] max-w-6xl items-center justify-center sm:min-h-[620px] lg:mt-28">{activities.map((activity, index) => <motion.div key={activity.src} initial={reduceMotion ? false : { opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: .25 }} transition={{ duration: .65, delay: reduceMotion ? 0 : index * .1 }} whileHover={reduceMotion ? undefined : { y: -14, rotate: 0, scale: 1.04, zIndex: 20 }} className={`absolute w-[52%] max-w-[250px] overflow-hidden rounded-[2rem] border-[6px] border-[#f3f4ed] bg-white shadow-[0_22px_50px_rgba(16,19,18,.18)] transition-shadow hover:z-20 hover:shadow-[0_30px_70px_rgba(16,19,18,.28)] sm:max-w-[310px] lg:max-w-[350px] ${activity.className} ${index === 0 ? "-translate-x-[82%] sm:-translate-x-[85%]" : index === 1 ? "-translate-x-[27%] -translate-y-12 sm:-translate-x-[35%] sm:-translate-y-20" : index === 2 ? "translate-x-[27%] -translate-y-8 sm:translate-x-[35%] sm:-translate-y-16" : "translate-x-[82%] sm:translate-x-[85%]"}`}><div className="relative aspect-[.78/1]"><Image src={activity.src} alt={activity.label} fill sizes="(max-width: 640px) 52vw, 350px" className="object-cover" /></div></motion.div>)}</div><div className="mt-4 flex justify-end border-t border-black/15 pt-6"><a href="#contact" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-[#596624] hover:text-[#101312]">Let&apos;s connect <ArrowUpRight size={15} /></a></div></div></section>
+  return (
+    <section id="off-track" className="relative border-t border-[#111112]/10 bg-[#111112] px-5 py-24 text-[#F5F5F0] sm:px-8 lg:px-12 lg:py-28">
+      <div className="mx-auto max-w-[1340px]">
+        {/* Section Header */}
+        <div className="border-b border-white/10 pb-6">
+          <h2 className="font-editorial text-4xl font-normal tracking-tight text-white sm:text-5xl">
+            Moments <span className="italic text-[#888888]">beyond</span> the screen.
+          </h2>
+        </div>
+
+        {/* 4 Photo Columns Grid (Like Lando's Photography Journal) */}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {activities.map((activity) => (
+            <div
+              key={activity.src}
+              className="dark-editorial-card group relative overflow-hidden rounded-3xl border border-white/10 bg-[#18181A] p-3 shadow-lg"
+            >
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#090B10]">
+                <Image
+                  src={activity.src}
+                  alt={activity.label}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute bottom-3 left-3 right-3 font-mono text-[11px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  {activity.label}
+                </div>
+              </div>
+              <div className="flex items-center justify-between px-2 pt-3 font-mono text-[10px] text-[#888888]">
+                <span>ARCHIVE</span>
+                <Camera size={13} className="text-[#D2FF00]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }
