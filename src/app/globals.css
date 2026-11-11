@@ -153,6 +153,44 @@ body {
   animation-play-state: paused;
 }
 
+/* ── Horizontal Infinite Marquee for Moments Gallery ── */
+@keyframes photo-marquee-gliding {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.photo-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  animation: photo-marquee-gliding 40s linear infinite;
+  will-change: transform;
+}
+
+.photo-marquee-container:hover .photo-marquee-track,
+.photo-marquee-container:focus-within .photo-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ── Hide Third-Party Watermark Badges ── */
+[data-aifx-wm] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tech-column-animated { animation: none; transform: none; }
   .tech-column-window { overflow-y: auto; mask-image: none; }

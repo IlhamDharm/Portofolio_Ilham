@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowUpRight, Code2, ExternalLink } from "lucide-react"
 import { projects } from "@/src/data/projects"
 import { ProjectCard } from "@/src/components/project-card"
+import { TopoLines } from "@/src/components/topo-lines"
 
 const categories = ["All", "Web App", "AI & ML", "Outdoor Tech", "Concept"]
 
@@ -29,11 +30,7 @@ export function ProjectFilter() {
       {/* ── 1. PRIMARY EDITORIAL HERO SHOWCASE: SAFEHike (Featured Platform) ── */}
       <div className="relative isolate overflow-hidden rounded-[2.5rem] border border-[#111112]/15 bg-white p-7 sm:p-12 lg:p-16 shadow-xl">
         {/* Topo Lines — Mountain Topography Metaphor for SafeHike */}
-        <div
-          data-aifx="topo-lines"
-          className="absolute inset-0 -z-10 pointer-events-none"
-          aria-hidden="true"
-        />
+        <TopoLines />
 
         {/* Accent Glow */}
         <div className="pointer-events-none absolute -right-20 -top-20 size-96 rounded-full bg-[#D2FF00]/25 blur-[120px] -z-10" />

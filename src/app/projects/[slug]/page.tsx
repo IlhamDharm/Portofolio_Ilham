@@ -55,14 +55,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </nav>
 
         {/* Header */}
-        <header className="relative isolate mt-12 grid gap-8 border-b border-[#111112]/10 pb-12 lg:grid-cols-12 lg:items-end">
-          {project.slug === "safehike" && (
-            <div
-              data-aifx="topo-lines"
-              className="absolute inset-0 -z-10 pointer-events-none"
-              aria-hidden="true"
-            />
-          )}
+        <header className="mt-12 grid gap-8 border-b border-[#111112]/10 pb-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <div className="mb-4 flex flex-wrap items-center gap-2 font-mono text-xs text-[#555555]">
               <span className="font-bold text-[#111112]">{project.category}</span>

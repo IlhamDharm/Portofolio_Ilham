@@ -38,7 +38,15 @@ export const projects: Project[] = [
     color: "#166534",
     github: "https://github.com/IlhamDharm/RawatRumah",
     live: "https://rawat-rumah.vercel.app/dashboard",
-    proof: ["Maintenance dashboard", "Service scheduling", "Expense tracking"],
+    image: "/projects/rawatrumah/dashboard.png",
+    images: [
+      "/projects/rawatrumah/dashboard.png",
+      "/projects/rawatrumah/barangrumah.png",
+      "/projects/rawatrumah/biaya.png",
+      "/projects/rawatrumah/jadwal.png",
+      "/projects/rawatrumah/riwayat.png",
+    ],
+    proof: ["5 interface screens", "Maintenance dashboard", "Service scheduling", "Expense tracking"],
   },
   {
     slug: "repoinsight-ai",

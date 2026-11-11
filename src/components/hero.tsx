@@ -4,6 +4,7 @@ import Image from "next/image"
 import { ArrowDownRight, Download } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 import { profile } from "@/src/data/profile"
+import { TopoLines } from "@/src/components/topo-lines"
 
 export function Hero() {
   const reduceMotion = useReducedMotion()
@@ -11,31 +12,14 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate min-h-[92vh] overflow-hidden px-5 pb-16 pt-32 sm:px-8 lg:px-12 lg:pt-36">
       {/* Topo Lines — render inside a container with className="relative isolate" */}
-      <div
-        data-aifx="topo-lines"
-        className="absolute inset-0 -z-10 pointer-events-none"
-        aria-hidden="true"
-      />
+      <TopoLines />
 
       {/* Decorative Speed Accent Glow */}
       <div className="pointer-events-none absolute right-0 top-1/4 h-[400px] w-96 rounded-full bg-[#D2FF00]/15 blur-[120px] -z-10" />
 
       <div className="relative z-10 mx-auto max-w-[1340px]">
-        {/* ── Top Racing Telemetry Status Bar ── */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#111112]/10 pb-4 font-mono text-xs uppercase tracking-widest text-[#555555]">
-          <div className="flex items-center gap-2">
-            <span className="flex size-2 rounded-full bg-[#D2FF00] ring-4 ring-[#D2FF00]/20" />
-            <span className="text-[#111112] font-bold">STATUS: ON TRACK</span>
-            <span className="text-[#888888]">/ INTERNSHIP 2026</span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px] text-[#888888]">
-            <span>INDONESIA · GMT+7</span>
-            <span>POLITEKNIK NEGERI MALANG</span>
-          </div>
-        </div>
-
         {/* ── Hero Split Layout: Asymmetrical Editorial Tension ── */}
-        <div className="mt-12 grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Left Column: Massive Editorial Typography */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -43,13 +27,8 @@ export function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 xl:col-span-8"
           >
-            {/* Tagline micro */}
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-[#555555]">
-              Full-Stack Software Engineer
-            </p>
-
             {/* Editorial Serif Giant Heading */}
-            <h1 className="mt-4 font-editorial text-5xl font-normal leading-[0.95] tracking-tight text-[#111112] sm:text-7xl lg:text-8xl xl:text-9xl">
+            <h1 className="font-editorial text-5xl font-normal leading-[0.95] tracking-tight text-[#111112] sm:text-7xl lg:text-8xl xl:text-9xl">
               Building software with <span className="italic">speed</span> &amp;{" "}
               <span className="relative inline-block font-semibold">
                 precision
@@ -94,12 +73,12 @@ export function Hero() {
               {/* Portrait Image */}
               <div className="relative aspect-[3/3.8] overflow-hidden bg-[#EAEAE5]">
                 <Image
-                  src="/ilham-profile-final.png"
+                  src="/iyan.png"
                   alt="Ilham Dharma Atmaja"
                   fill
                   priority
                   sizes="(max-width: 1024px) 400px, 420px"
-                  className="object-cover object-bottom transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 {/* Neon Lime Corner Accent Tag */}
